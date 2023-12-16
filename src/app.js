@@ -11,10 +11,11 @@ const errorHandler = require("./middleware/v1/errorHandler");
 
 
 const userRoute = require("./routers/v1/userRoutes");
-const contactRoutes = require("./routers/v1/contactRoutes"); 
+const contactRoutes = require("./routers/v1/contactRoutes");
+const wordRoutes = require("./routers/v1/wordRoutes"); 
 const AsyncHandler = require("express-async-handler");
 const User = require("./models/userModel");
-const VerificationCode  = require("./models/verificationCodeModel");
+const VerificationCode  = require("./models/verificationCodeModel"); 
 
 
 // Middleware to parse JSON in the request body
@@ -51,6 +52,8 @@ app.get('/users', AsyncHandler(async(req,res)=>{
 app.use('/api/v1/users', userRoute);
 
 app.use('/api/v1/contacts', contactRoutes);
+app.use( wordRoutes);
+ 
 
 
 // console.log(listEndpoints(app));
