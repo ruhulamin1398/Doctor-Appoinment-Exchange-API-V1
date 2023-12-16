@@ -1,3 +1,9 @@
+ 
+
+
+
+      <!-- words.ejs -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,21 +14,61 @@
   <!-- Add Bootstrap CSS link -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body {
-      background: linear-gradient(to right, #030710, #09055d);
-      color: #fff;
-    }
+ body {
+    background: linear-gradient(to right, #030710, #09055d);
+    color: #fff;
+  }
 
-    .container {
-      padding-top: 10px;
-    }
+  .container {
+    padding-top: 10px;
+  }
+
+  .word-container {
+    margin-top: 20px;
+  }
+  #words p {
+  font-size: 130%;
+      
+}
 
     .word-container {
       margin-top: 20px;
     }
-    #words p {
-	font-size: 150%;
-    	}
+
+    .word-list a {
+      display: block;
+      margin-bottom: 5px;
+      color: #fff;
+      text-decoration: none;
+      float: left;
+  padding-left: 10px;
+    }
+
+    .word-list a:hover {
+      text-decoration: underline;
+    }
+    #category-title {
+	height: 100px;
+	display: grid;
+	text-align: center;
+	padding-top: 30px;
+ 
+    }
+    .word-list a.selected {
+    color: #ffcc00; /* Change this to the desired color for the selected word */
+    font-weight: bold; /* You can add additional styles for the selected word */
+  }
+
+  .btn-outline-primary {
+  color: #fff;
+  border-color: #fff;
+}
+
+.btn-outline-primary:hover {
+  background-color: #fff;
+  color: #000;
+}
+
   </style>
 </head>
 
@@ -30,7 +76,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#">Chandrobindhu</a>
+      <a class="navbar-brand" href="#">Word Categories</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -50,11 +96,13 @@
   <div class="container">
     <div class="word-container">
       <h2 id="category-title">Select a category to view words.</h2>
-      <div id="words"></div>
-      <div class="text-center mt-4">
-        <button class="btn btn-primary" id="prev-btn">Previous</button>
-        <button class="btn btn-primary" id="next-btn">Next</button>
+      <div id="word-detail"></div>
+      <div class="text-center my-5  ">
+        <button class="btn btn-outline-primary" id="prev-btn">Previous</button>
+<button class="btn btn-outline-primary" id="next-btn">Next</button>
       </div>
+      <div id="word-list" class="word-list"></div>
+
     </div>
   </div>
 
@@ -64,21 +112,33 @@
   <script>
     // JavaScript/jQuery for handling menu and buttons
     let currentCategoryIndex = 0;
-let allWords = <%- JSON.stringify(allWords) %>;
+    let currentWordIndex = 0;
+    let allWords = <%- JSON.stringify(allWords) %>;
 
     function loadWords(category) {
-      const categoryIndex = allWords.findIndex(item => item.category === category);
-      currentCategoryIndex = categoryIndex;
-      const words = allWords[categoryIndex].items.join(', ');
-      $('#category-title').text(`Words in ${category}`);
-      $('#words').html(`<p>${words}</p>`);
-    }
+  const categoryIndex = allWords.findIndex(item => item.category === category);
+  currentCategoryIndex = categoryIndex;
+  currentWordIndex = 0; // Reset word index when changing categories
+  showWordDetail(allWords[categoryIndex].items[currentWordIndex]);
+  displayWordList(allWords[categoryIndex].items);
+}
+function showWordDetail(word) {
+  $('#category-title').text(` ${word}`);
+  // Remove the 'selected' class from all links
+  $('.word-list a').removeClass('selected');
+  // Add the 'selected' class to the currently selected word
+  $(`.word-list a:contains('${word}')`).addClass('selected');
+}
+function displayWordList(words) {
+  const wordListHtml = words.map(word => `<a href="#" onclick="showWordDetail('${word}')">${word}</a>`).join('');
+  $('#word-list').html(wordListHtml);
+}
 
-    function updateCategory(direction) {
-      currentCategoryIndex += direction;
-      currentCategoryIndex = Math.max(0, Math.min(currentCategoryIndex, allWords.length - 1));
-      const category = allWords[currentCategoryIndex].category;
-      loadWords(category);
+    function updateWord(direction) {
+      currentWordIndex += direction;
+      currentWordIndex = Math.max(0, Math.min(currentWordIndex, allWords[currentCategoryIndex].items.length - 1));
+      const word = allWords[currentCategoryIndex].items[currentWordIndex];
+      showWordDetail(word);
     }
 
     $(document).ready(function () {
@@ -87,11 +147,11 @@ let allWords = <%- JSON.stringify(allWords) %>;
 
       // Button click events
       $('#prev-btn').click(function () {
-        updateCategory(-1);
+        updateWord(-1);
       });
 
       $('#next-btn').click(function () {
-        updateCategory(1);
+        updateWord(1);
       });
     });
   </script>
