@@ -1,22 +1,20 @@
 const asyncHandler = require("express-async-handler"); 
 const Word = require("../../models/wordSchema");
+// const words = require("../../views/words.ejs")
 
 //@desc Create New word
 //@route POST /add-word
 //@access pubic
 const getWords = asyncHandler(async (req, res) => {
- 
-  
+  const allWords = await Word.find();
+  let words = [];
 
-  const  allWords = await Word.find();
-  let words = []; 
-  for (const cat of allWords) {
-   words=  words.concat(cat.items)
-    console.log(cat.items)
-  }
+  // for (const cat of allWords) {
+  //   words = words.concat(cat.items);
+  //   console.log(cat.items);
+  // }
 
-
-  res.status(201).json(words);
+  res.render('words', { allWords });
 });
 
 
