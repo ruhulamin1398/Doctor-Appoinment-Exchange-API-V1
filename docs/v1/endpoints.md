@@ -38,7 +38,7 @@ Content-Length: 95
 
 {
     "username": "hello",
-    "email": "tecado6359@nasmis.com",
+    "email": "tecado6212359@nasmis.com",
     "password": "123234"
 }
 ```
@@ -121,7 +121,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuY
 
 GET /api/v1/users/current/ HTTP/1.1
 Host: localhost:5001
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InRlY2FkbzYzNTlAbmFzbWlzLmNvbSIsImlkIjoiNjU2NDgyZGY3MzBlOGEzYzBiY2I0OGIyIiwidHlwZSI6InVzZXIiLCJkYXRhIjp7InR5cGUiOiJ1c2VyIn19LCJpYXQiOjE3MDEwODU5MTksImV4cCI6MTczMjE4OTkxOX0.-sUYaFquKo6l5g0AuSUWV45AVjpYS-zBBOqm6rPXqqQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InRlY2FkbzYyMTIzNTlAbmFzbWlzLmNvbSIsImlkIjoiNjU4ZGQ0ZWQ4YjM4Y2RjYTJkNTNiNTY0IiwidHlwZSI6InVzZXIiLCJkYXRhIjp7InR5cGUiOiJ1c2VyIn19LCJpYXQiOjE3MDM3OTM5MDEsImV4cCI6MTczNDg5NzkwMX0.souGn8iYkoLQ__V5psNk5V8HeLhvYSRTBTQGtUAy3HU
 ```
 
 

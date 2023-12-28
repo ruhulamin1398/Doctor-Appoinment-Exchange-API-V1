@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler")
 const User = require("../../models/userModel")
+const DoctorProfile = require("../../models/doctorProfileModel")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
@@ -13,7 +14,7 @@ const { sentEMail } = require("./mailSenderController")
 const registerUser = asyncHandler(async (req, res) => {
 
     // console.log(req.body)
-    const { username, email, password } = req.body;
+    const { username, email, password ,user_type} = req.body;
 
     if (!username || !email || !password) {
         res.status(400);
@@ -34,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
         username,
         email,
         password: hashedPassword,
+        user_type: user_type === "doctor" ? "doctor" : "patient",
     })
 
     if (user) {
@@ -59,6 +61,27 @@ const registerUser = asyncHandler(async (req, res) => {
 
         }
 
+
+
+        /// creating a doctor profile 
+
+        const doctor = await DoctorProfile.create({
+            name:username,
+            "user_id":user.id,
+            "img": "https://example.com/doctor_image.jpg",
+            "rating": 4.5,
+            "degree": "MBBS",
+            "location": "City Hospital",
+            "availableDate": ["Monday", "Wednesday", "Friday"],
+            "availableTime": ["09:00", "14:00"]
+
+            
+        })
+
+
+ 
+
+
         res.status(201);
 
         res.json({
@@ -66,8 +89,7 @@ const registerUser = asyncHandler(async (req, res) => {
             "token": accessToken,
         })
 
-
-        // 
+  
 
     }
     else {

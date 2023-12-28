@@ -1,0 +1,73 @@
+
+
+
+@host = doctorapp-v1-3ce612cde747.herokuapp.com
+# @host = localhost:5001
+
+
+### Doctor Profile Creation
+
+
+POST /api/v1/doctors HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+ 
+{
+    "name": "Dr. John Doe",
+    "img": "https://example.com/doctor_image.jpg",
+    "rating": 4.5,
+    "degree": "MD",
+    "location": "City Hospital",
+    "availableDate": ["Monday", "Wednesday", "Friday"],
+    "availableTime": ["09:00", "14:00"]
+}
+
+
+### Get All Doctor Profiles
+
+GET /api/v1/doctors HTTP/1.1
+Host: {{host}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+
+
+
+
+
+### Get a Single Doctor Profile
+ 
+
+GET /api/v1/doctors/658dde35b8a678c671297600 HTTP/1.1
+Host: {{host}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+
+
+
+### Update Doctor Profile
+
+ 
+
+PUT /api/v1/doctors HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+
+{
+    "name": "Dr. sajjad",
+    "img": "https://example.com/updated_doctor_image.jpg",
+    "rating": 4.8,
+    "degree": "PhD",
+    "location": "New Hospital",
+    "availableDate": ["Tuesday", "Thursday", "Saturday"],
+    "availableTime": ["10:00", "15:00"]
+}
+
+### Delete Doctor Profile
+
+ 
+
+DELETE /api/v1/doctors/ HTTP/1.1
+Host: {{host}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+
+

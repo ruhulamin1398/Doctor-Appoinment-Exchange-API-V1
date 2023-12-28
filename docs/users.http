@@ -1,0 +1,49 @@
+
+
+
+@host = doctorapp-v1-3ce612cde747.herokuapp.com
+# @host = localhost:5001
+
+
+### Clear User Data 
+  
+GET /clean-data HTTP/1.1
+Host: {{host}}
+
+
+ 
+### User Registration 
+POST /api/v1/users/register HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+
+{
+    "username": "hello",
+    "email": "sajjad@nasmis.com",
+    "password": "123234",
+    "type": "doctor"
+}
+
+
+### User Login
+
+POST /api/v1/users/login HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "s122dfgdsfgds22@nasmis.com",
+    "password": "123234"
+}
+
+
+
+### Current User 
+ 
+GET /api/v1/users/current/ HTTP/1.1
+Host: localhost:5001
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZDY4OWY5ODIwY2ViYmYzNDE2OTEiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NDMxMywiZXhwIjoxNzM0ODk4MzEzfQ.plT1UIkWeoM4JbbimPjU7RoKMkslWwfhEpNukr48iek
+
+
+

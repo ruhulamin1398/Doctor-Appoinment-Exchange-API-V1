@@ -5,17 +5,19 @@ require("./db/conn")
 const errorHandler = require("./middleware/v1/errorHandler");
 const path = require('path'); // Add this line
 
-// const listEndpoints = require('express-list-endpoints');
+const listEndpoints = require('express-list-endpoints');
 
 
 
 
 const userRoute = require("./routers/v1/userRoutes");
 const contactRoutes = require("./routers/v1/contactRoutes");
+const doctorRoute = require("./routers/v1/doctorRoutes");
 const wordRoutes = require("./routers/v1/wordRoutes"); 
 const AsyncHandler = require("express-async-handler");
 const User = require("./models/userModel");
 const VerificationCode  = require("./models/verificationCodeModel"); 
+const doctorProfile = require("./models/doctorProfileModel");
 
 
 // Middleware to parse JSON in the request body
@@ -32,6 +34,7 @@ app.get('/clean-data', AsyncHandler(async(req,res)=>{
   
   
   await User.deleteMany({});
+  await doctorProfile.deleteMany({});
   await VerificationCode.deleteMany({})
    
  res.json({ "msg" : "All data was deleted " })
@@ -48,15 +51,17 @@ app.get('/users', AsyncHandler(async(req,res)=>{
 
   
 
-// Use the user routecontra
+// Use the user routec 
 app.use('/api/v1/users', userRoute);
+// Use the doctor routec 
+app.use('/api/v1/doctors', doctorRoute);
 
 app.use('/api/v1/contacts', contactRoutes);
 app.use( wordRoutes);
  
 
 
-// console.log(listEndpoints(app));
+console.log(listEndpoints(app));
 
 app.set('view engine', 'ejs'); // Set EJS as the view engine
 app.set('views', path.join(__dirname, 'views')); // Set the views directory path
