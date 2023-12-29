@@ -1,5 +1,5 @@
 # Node.js
-node_modules/
+./node_modules
 # Ignore all files in the node_modules directory
 node_modules/
 

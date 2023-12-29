@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "build": "babel src -d dist"
+      
   },
   "author": "",
   "license": "ISC",
@@ -21,11 +21,9 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.1",
     "nodemailer": "^6.9.7"
-  },
+  }
+,  
   "devDependencies": {
-    "@babel/cli": "^7.23.4",
-    "@babel/core": "^7.23.5",
-    "@babel/preset-env": "^7.23.5",
     "express-list-endpoints": "^6.0.0"
   }
 }
