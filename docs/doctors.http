@@ -1,9 +1,9 @@
 
 
 
-@host = doctorapp-v1-3ce612cde747.herokuapp.com
+@host =doctor-c5302a2d9454.herokuapp.com
 # @host = localhost:5001
-
+@token =Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThmMDNiYzMwMTI4OGRjZDMwZTE1YjMiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzg3MTQyMSwiZXhwIjoxNzM0OTc1NDIxfQ.Nc7OSmsZaWw3lgGdzb-lz--E_pXe97hBeujjF3ZmqYs
 
 ### Doctor Profile Creation
 
@@ -11,7 +11,7 @@
 POST /api/v1/doctors HTTP/1.1
 Host: {{host}}
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+Authorization: {{token}}
  
 {
     "name": "Dr. John Doe",
@@ -28,7 +28,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuY
 
 GET /api/v1/doctors HTTP/1.1
 Host: {{host}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+Authorization:{{token}}
 
 
 
@@ -37,9 +37,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuY
 ### Get a Single Doctor Profile
  
 
-GET /api/v1/doctors/658dde35b8a678c671297600 HTTP/1.1
+GET /api/v1/doctors/658f03bc301288dcd30e15b3 HTTP/1.1
 Host: {{host}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+Authorization:{{token}}
 
 
 
@@ -50,7 +50,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuY
 PUT /api/v1/doctors HTTP/1.1
 Host: {{host}}
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+Authorization:{{token}}
 
 {
     "name": "Dr. sajjad",
@@ -68,6 +68,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuY
 
 DELETE /api/v1/doctors/ HTTP/1.1
 Host: {{host}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZGUzNWI4YTY3OGM2NzEyOTc2MDAiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NjI3OCwiZXhwIjoxNzM0OTAwMjc4fQ.35cPfB_RZ-f0mCVrbp8LlU2dGIwPqjLmJ4NGwcCE-iE
+Authorization:{{token}}
 
 
