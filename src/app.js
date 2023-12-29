@@ -5,7 +5,7 @@ require("./db/conn")
 const errorHandler = require("./middleware/v1/errorHandler");
 const path = require('path'); // Add this line
 
-// const listEndpoints = require('express-list-endpoints');
+
 
 
 
@@ -60,8 +60,6 @@ app.use('/api/v1/contacts', contactRoutes);
 app.use( wordRoutes);
  
 
-
-// console.log(listEndpoints(app));
 
 app.set('view engine', 'ejs'); // Set EJS as the view engine
 app.set('views', path.join(__dirname, 'views')); // Set the views directory path
