@@ -1,8 +1,8 @@
 
 
 
-@host = doctorapp-v1-3ce612cde747.herokuapp.com
-# @host = localhost:5001
+# @host = doctorapp-v1-3ce612cde747.herokuapp.com
+@host = localhost:5001
 
 
 ### Clear User Data 
@@ -33,7 +33,7 @@ Host: {{host}}
 Content-Type: application/json
 
 {
-    "email": "s122dfgdsfgds22@nasmis.com",
+    "email": "sajjad@nasmis.com",
     "password": "123234"
 }
 
