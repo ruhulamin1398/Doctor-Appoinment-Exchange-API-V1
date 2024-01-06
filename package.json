@@ -8,7 +8,7 @@
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
     "deploy": "vercel --prod",
-    "build": "npm run build:static"
+    "build:static": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,7 +22,9 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.1",
     "nodemailer": "^6.9.7",
-    "vercel": "^33.0.2"
+    "vercel": "^33.0.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

@@ -1,8 +1,8 @@
 
 
 
-@host =doctor-appoinment-exchange-api-v1.vercel.app
-# @host = localhost:5001
+# @host =doctor-appoinment-exchange-api-v1.vercel.app
+@host = localhost:5001
 
 
 ### Clear User Data 
