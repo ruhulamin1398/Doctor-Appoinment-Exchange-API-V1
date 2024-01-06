@@ -8,7 +8,7 @@
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
     "deploy": "vercel --prod",
-    "build": "npm run build:static",
+    "build": "npm run build:static"
   },
   "author": "",
   "license": "ISC",
