@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "build": "npm run build:static",
   },
   "author": "",
   "license": "ISC",
