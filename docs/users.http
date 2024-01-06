@@ -1,7 +1,7 @@
 
 
 
-@host =doctor-c5302a2d9454.herokuapp.com
+@host =doctor-appoinment-exchange-api-v1.vercel.app
 # @host = localhost:5001
 
 
@@ -42,8 +42,94 @@ Content-Type: application/json
 ### Current User 
  
 GET /api/v1/users/current/ HTTP/1.1
-Host: localhost:5001
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZDY4OWY5ODIwY2ViYmYzNDE2OTEiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5NDMxMywiZXhwIjoxNzM0ODk4MzEzfQ.plT1UIkWeoM4JbbimPjU7RoKMkslWwfhEpNukr48iek
+Host: {{host}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThmMDNiYzMwMTI4OGRjZDMwZTE1YjMiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzg3MTQyMSwiZXhwIjoxNzM0OTc1NDIxfQ.Nc7OSmsZaWw3lgGdzb-lz--E_pXe97hBeujjF3ZmqYs
 
 
+
+
+
+
+
+### Resend Verification Email 
+
+```http
+///Request 
+
+POST /api/v1/users/resend-verification-email HTTP/1.1
+Host: {{host}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InRlY2FkbzYzNTlAbmFzbWlzLmNvbSIsImlkIjoiNjU2NDgyZGY3MzBlOGEzYzBiY2I0OGIyIiwidHlwZSI6InVzZXIiLCJkYXRhIjp7InR5cGUiOiJ1c2VyIn19LCJpYXQiOjE3MDEwODU5MTksImV4cCI6MTczMjE4OTkxOX0.-sUYaFquKo6l5g0AuSUWV45AVjpYS-zBBOqm6rPXqqQ
+
+```
+
+
+```http
+///Response 
+    status:200
+
+
+{
+    "msg": "Verification email send successful"
+}
+
+```
+
+
+
+
+
+### Verify OTP using code - call from app
+
+```http
+///Request 
+
+GET /api/v1/users/verify-user-otp-token HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InRlY2FkbzYzNTlAbmFzbWlzLmNvbSIsImlkIjoiNjU2NDdjNjM4ZWQ3MjczNjk4MTkxMzUyIiwidHlwZSI6InVzZXIiLCJkYXRhIjp7InR5cGUiOiJ1c2VyIn19LCJpYXQiOjE3MDEwODQyNTksImV4cCI6MTczMjE4ODI1OX0.Bl3C5v9bvXYrdJjqlV3ihKsJqmpsNIq_CwG6EXvPJbo
+Content-Length: 21
+
+{
+    "code":5665
+}
+
+```
+
+
+```http
+///Response 
+    status:200
+
+
+{
+    "msg": "User is Activated"
+}
+
+```
+
+
+
+
+
+### Verify OTP using token - call from Email Link
+
+```http
+///Request 
+
+GET /api/v1/users/verify-user-otp-token?id=656454226aeb13545a52d0f8&null=null&token=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6ImJpbml3bzE4MTBAbWFpbm9qLmNvbSIsImlkIjoiNjU2NDU0MjI2YWViMTM1NDVhNTJkMGY4IiwidHlwZSI6Im90cCIsImRhdGEiOnsidmVyaWZpY2F0aW9uX2NvZGVfaWQiOiI2NTY0NTZlODJhNTk1NDJlNzJjNDI0ZWEiLCJjb2RlIjo0NTI0LCJ0eXBlIjoib3RwIn19LCJpYXQiOjE3MDEwNzQ2NjQsImV4cCI6MTcwMTA3ODI2NH0.4GSM7T4UkLYQjhgUuvmTzXyjE-q2uit3DZDeu6htU-s HTTP/1.1
+Host: {{host}}
+
+```
+
+
+```http
+///Response 
+    status:200
+
+
+{
+    "msg": "User is Activated"
+}
+
+```
 

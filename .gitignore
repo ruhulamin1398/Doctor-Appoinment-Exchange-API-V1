@@ -84,3 +84,4 @@ coverage/
 
 # Custom folders
 custom-folder/
+.vercel

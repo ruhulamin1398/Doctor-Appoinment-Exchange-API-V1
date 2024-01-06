@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "deploy": "vercel --prod"
   },
   "author": "",
   "license": "ISC",
@@ -18,8 +19,9 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
-    "mongoose": "^8.0.1", 
-    "nodemailer": "^6.9.7"
+    "mongoose": "^8.0.1",
+    "nodemailer": "^6.9.7",
+    "vercel": "^33.0.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

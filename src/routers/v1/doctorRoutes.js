@@ -14,7 +14,7 @@ router.use(validateToken);
 // @desc    Create a doctor profile
 // @route   POST /api/v1/doctors
 // @access  Public
-router.post("/",  createDoctorProfile);
+router.post("/", createDoctorProfile);
 
 // @desc    Get all doctor profiles
 // @route   GET /api/v1/doctors
