@@ -27,6 +27,10 @@ const doctorProfileSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add the doctor's location"],
     },
+    designation: {
+      type: String,
+      default: "",
+    },
     availableDate: {
       type: [String], // Array of days
       required: [true, "Please add the doctor's available dates"],

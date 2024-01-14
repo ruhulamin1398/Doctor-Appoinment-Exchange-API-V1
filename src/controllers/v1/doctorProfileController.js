@@ -7,7 +7,7 @@ const { response } = require("express");
 // @access  Public
 const createDoctorProfile = asyncHandler(async (req, res) => {
  
-  const { name, img, rating, degree, location, availableDate, availableTime } = req.body;
+  const { name, img, rating, degree, designation, location, availableDate, availableTime } = req.body;
   const  user_id= req.user.id;
   const doctor = await DoctorProfile.findOne({ user_id});
   
@@ -27,6 +27,7 @@ const createDoctorProfile = asyncHandler(async (req, res) => {
     rating,
     degree,
     location,
+    designation,
     availableDate,
     availableTime,
   });
@@ -72,7 +73,7 @@ const getDoctorProfileById = asyncHandler(async (req, res) => {
 // @route   PUT /api/v1/doctors
 // @access  Public
 const updateDoctorProfile = asyncHandler(async (req, res) => {
-  const { name, img, rating, degree, location, availableDate, availableTime } = req.body;
+  const { name, img, rating, degree, location, designation,availableDate, availableTime } = req.body;
 
   const  user_id= req.user.id;
   const doctorProfile = await DoctorProfile.findOne({ user_id});
@@ -86,7 +87,8 @@ const updateDoctorProfile = asyncHandler(async (req, res) => {
   doctorProfile.img = img || doctorProfile.img;
   doctorProfile.rating = rating || doctorProfile.rating;
   doctorProfile.degree = degree || doctorProfile.degree;
-  doctorProfile.location = location || doctorProfile.location;
+  doctorProfile.location = location || doctorProfile.location; 
+  doctorProfile.designation = designation || doctorProfile.designation;
   doctorProfile.availableDate = availableDate || doctorProfile.availableDate;
   doctorProfile.availableTime = availableTime || doctorProfile.availableTime;
 
