@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler")
 const User = require("../../models/userModel")
 const DoctorProfile = require("../../models/doctorProfileModel")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
 const VerificationCode = require("../../models/verificationCodeModel")
@@ -417,10 +417,6 @@ const sentVerifyMail = asyncHandler(async (user_id) => {
     <H1>Verification code : ${code}</H1>
     <p>Click the button below to verify your account:</p>
     <a target="_blank" style="display: inline-block; background-color: blue; color: white; padding: 10px; border: 1px solid;" href="${process.env.HOST}/users/verify-user-otp-token?id=${user_id}&&token=Bearer ${accessToken}">Verify Now</a>
-
-    <p>Alternatively, you can copy and paste the following link into your browser:</p>
-    <pre>${process.env.HOST}/users/verify-user-otp-token?id=${user_id}&&token=Bearer ${accessToken} </pre>
-    
 `;
 
 

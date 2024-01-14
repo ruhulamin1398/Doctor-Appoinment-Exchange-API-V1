@@ -22,6 +22,7 @@ const doctorProfile = require("./models/doctorProfileModel");
 
 // Middleware to parse JSON in the request body
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/hi', AsyncHandler(async(req,res)=>{
   // Update all existing documents to include the new fields

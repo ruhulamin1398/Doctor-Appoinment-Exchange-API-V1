@@ -1,0 +1,144 @@
+<!-- add-words.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Add New Words</title>
+  <!-- Add Bootstrap CSS link -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #030710, #09055d);
+      color: #fff;
+    }
+
+    .container {
+      padding-top: 10px;
+    }
+
+    .word-container {
+      margin-top: 20px;
+    }
+
+    #category-title {
+      font-size: 250%;
+      height: 100px;
+      display: grid;
+      text-align: center;
+      padding-top: 30px;
+    }
+
+    .btn-outline-primary {
+      color: #fff;
+      border-color: #fff;
+    }
+
+    .btn-outline-primary:hover {
+      background-color: #fff;
+      color: #000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark " style="background-color:#030710 !important">
+    <div class="container">
+      <a class="navbar-brand" href="#">Chandrabindhu</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <% allWords.forEach(category => { %>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="loadWords('<%= category.category %>')"><%= category.category %></a>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="word-container">
+      <h2 id="category-title">Add New Words</h2>
+
+      <!-- Your form for adding new words -->
+      <form action="/add-word-form" method="POST">
+        <div class="mb-3">
+          <label for="categoryInput" class="form-label">Category</label>
+          <input type="text" class="form-control" id="categoryInput" name="category" placeholder="Category">
+        </div>
+        <div class="mb-3">
+          <label for="wordsInput" class="form-label">Word</label>
+          <input type="text" class="form-control" id="wordsInput" name="word" placeholder="Word1">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Words</button>
+      </form>
+      
+
+    </div>
+  </div>
+
+  <!-- Add Bootstrap JS and jQuery script links -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // JavaScript/jQuery for handling menu and buttons
+    let currentCategoryIndex = 0;
+    let currentWordIndex = 0;
+    let allWords = <%- JSON.stringify(allWords) %>;
+
+    function loadWords(category) {
+  const categoryIndex = allWords.findIndex(item => item.category === category);
+  currentCategoryIndex = categoryIndex;
+  currentWordIndex = 0; // Reset word index when changing categories
+  showWordDetail(allWords[categoryIndex].items[currentWordIndex]);
+  displayWordList(allWords[categoryIndex].items);
+}
+function showWordDetail(word) {
+  $('#category-title').text(` ${word}`);
+  // Remove the 'selected' class from all links
+  $('.word-list a').removeClass('selected');
+  // Add the 'selected' class to the currently selected word
+  $(`.word-list a:contains('${word}')`).addClass('selected');
+}
+function displayWordList(words) {
+  const wordListHtml = words.map(word => `<a href="#" onclick="showWordDetail('${word}')">${word}</a>`).join('');
+  $('#word-list').html(wordListHtml);
+}
+
+    function updateWord(direction) {
+      currentWordIndex += direction;
+      currentWordIndex = Math.max(0, Math.min(currentWordIndex, allWords[currentCategoryIndex].items.length - 1));
+      const word = allWords[currentCategoryIndex].items[currentWordIndex];
+      showWordDetail(word);
+    }
+
+    $(document).ready(function () {
+      // Initial load
+      loadWords(allWords[0].category);
+
+      // Button click events
+      $('#prev-btn').click(function () {
+        updateWord(-1);
+      });
+
+      $('#next-btn').click(function () {
+        updateWord(1);
+      });
+    });
+  </script>
+
+
+
+ 
+</body>
+
+</html>

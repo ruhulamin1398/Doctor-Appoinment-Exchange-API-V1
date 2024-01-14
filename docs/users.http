@@ -2,7 +2,7 @@
 
 
  
-@host = doctorapp-v1-3ce612cde747.herokuapp.com 
+@host =dapiv1.ruhul-amin.com
 # @host = localhost:5001
 
 
@@ -15,7 +15,7 @@ Host: {{host}}
  
 ### User Registration 
 POST /api/v1/users/register HTTP/1.1
-Host: {{host}}
+Host: dapiv1.ruhul-amin.com
 Content-Type: application/json
 
 
@@ -59,7 +59,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuY
 
 POST /api/v1/users/resend-verification-email HTTP/1.1
 Host: {{host}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InRlY2FkbzYzNTlAbmFzbWlzLmNvbSIsImlkIjoiNjU2NDgyZGY3MzBlOGEzYzBiY2I0OGIyIiwidHlwZSI6InVzZXIiLCJkYXRhIjp7InR5cGUiOiJ1c2VyIn19LCJpYXQiOjE3MDEwODU5MTksImV4cCI6MTczMjE4OTkxOX0.-sUYaFquKo6l5g0AuSUWV45AVjpYS-zBBOqm6rPXqqQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThmMDNiYzMwMTI4OGRjZDMwZTE1YjMiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzg3MTQyMSwiZXhwIjoxNzM0OTc1NDIxfQ.Nc7OSmsZaWw3lgGdzb-lz--E_pXe97hBeujjF3ZmqYs
 
 ```
 
