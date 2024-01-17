@@ -211,6 +211,8 @@ const currentUser = asyncHandler(async (req, res) => {
         const id = user._id;
         const username = user.username;
         const is_verified = user.is_verified
+        const user_type = user.user_type
+        const amount = user.amount
 
 
         res.status(200)
@@ -220,7 +222,9 @@ const currentUser = asyncHandler(async (req, res) => {
             id,
             username,
             email,
-            is_verified
+            is_verified,
+            user_type,
+            amount
         })
 
     }

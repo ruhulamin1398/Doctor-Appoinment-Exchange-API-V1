@@ -1,3 +1,4 @@
+const { Int32 } = require("mongodb");
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
@@ -27,6 +28,10 @@ const userSchema = mongoose.Schema(
     user_type: {
       type: String,
       default: "patient",
+    },
+    amount: {
+      type: Number,
+      default: 1000,
     },
 
     
