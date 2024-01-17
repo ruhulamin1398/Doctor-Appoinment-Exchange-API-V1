@@ -8,6 +8,7 @@ const { JaroWinklerDistance } = natural;
 //@access pubic
 const getWords = asyncHandler(async (req, res) => {
   const allWords = await Word.find();
+ 
 
 
   res.render('words', { allWords });
@@ -117,10 +118,20 @@ const addWords = asyncHandler(async (req, res) => {
 
 
 
+
+//@desc Render the add-words view
+//@route GET /add-words
+//@access public
+const ckWords = asyncHandler(async (req, res) => {
+  const allWords = await Word.find();
+  res.render('ckwords', { allWords });
+});
+
+
 //@desc Create New word
 //@route get /ckWords
 //@access pubic
-const ckWords = asyncHandler(async (req, res) => {
+const ckWordsSubmit = asyncHandler(async (req, res) => {
  
    const input = req.query.word;
   const categories = await Word.find();
@@ -163,5 +174,6 @@ module.exports = {
   getWords,
   ckWords,
   renderAddWordsView,
-  addWordForm
+  addWordForm,
+  ckWordsSubmit
 };
