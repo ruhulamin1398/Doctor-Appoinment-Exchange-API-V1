@@ -118,12 +118,14 @@
                     let words = response.similar;
                     console.log(words)
 
-                    const wordListHtml = words.map(word => `<div>${word}</div>`).join('');
-                    $('#simarwords').html(wordListHtml);
+                    let wordListHtml = words.map(word => `<div>${word}</div>`).join('');
+                    
                     if(response.status == 1){
-
-                        showToast('Done');
+                        wordListHtml="";
+                        showToast(response.word);
                     }
+                  
+                    $('#simarwords').html(wordListHtml);
                     // Log the response to the console
                     console.log(response);
                 },

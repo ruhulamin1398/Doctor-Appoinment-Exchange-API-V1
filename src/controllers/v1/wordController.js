@@ -142,6 +142,7 @@ const ckWordsSubmit = asyncHandler(async (req, res) => {
   let closestMatch = [];
   let highestScore = 0.8;
   let status = 0;
+  let mword = "";
 
 
   allWords.forEach((word) => {
@@ -149,8 +150,14 @@ const ckWordsSubmit = asyncHandler(async (req, res) => {
 
     if (similarityScore > highestScore) {
       closestMatch.push(word);
-      if (similarityScore == 1)
+      if (similarityScore == 1){
         status = 1;
+        console.log("word ",word)
+        mword = word;
+
+        console.log("mword ",mword)
+      }
+        
 
     }
   });
@@ -163,7 +170,8 @@ const ckWordsSubmit = asyncHandler(async (req, res) => {
 
   res.json({
     status,
-    "similar": closestMatch
+    "similar": closestMatch,
+    "word":mword
   });
 });
 
