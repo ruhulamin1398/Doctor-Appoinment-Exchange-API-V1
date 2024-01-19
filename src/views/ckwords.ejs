@@ -49,6 +49,7 @@
 
 <body>
 
+  
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark " style="background-color:#030710 !important">
         <div class="container">
             <a class="navbar-brand" href="words">Chandrabindhu</a>
@@ -74,11 +75,11 @@
     <div class="container">
         <div class="word-container ">
 
-            <form  method="GET" id="wordForm">
+            <div   id="wordForm">
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="wordsInput" name="word" placeholder="Word1">
+                    <input type="text" class="form-control" id="wordsInput" name="word" placeholder="Word1" autofocus>
                 </div>
-            </form>
+            </div>
 
 
         </div>
@@ -111,7 +112,7 @@
 
             // Make an AJAX request to your server
             $.ajax({
-                url: '/ck-word-submit', // Change this URL to match your server route
+                url: '/ck-word-submit',  
                 method: 'GET',
                 data: { word: word },
                 success: function (response) {
