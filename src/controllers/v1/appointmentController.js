@@ -12,7 +12,8 @@ const User = require("../../models/userModel");
 // @route   GET /api/v1/appoinments/:id
 // @access  Public
 const GetAppointmentDetails = asyncHandler(async (req, res) => {
-  const { appointment_id } = req.body;
+ 
+  const appointment_id = req.params.id;
 
   const appointment = await Appointment.findById(appointment_id).populate("patient");
   if (!appointment) {
