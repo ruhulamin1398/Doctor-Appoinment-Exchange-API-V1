@@ -1,0 +1,74 @@
+@host =dapiv1.ruhul-amin.com
+# @host = localhost:5001
+
+## view all appointment using doctor ID
+GET /api/v1/doctors/65a28121a1b16ebca12c7621/appointments HTTP/1.1
+Host: {{host}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiUnVodWwiLCJlbWFpbCI6InJ1aHVsYW1pbjAxMDM5OEBnbWFpbC5jb20iLCJpZCI6IjY1YTI4MTIxYTFiMTZlYmNhMTJjNzYyMSIsInR5cGUiOiJ1c2VyIiwiZGF0YSI6eyJ0eXBlIjoidXNlciJ9fSwiaWF0IjoxNzA1MTQ4NzA2LCJleHAiOjE3MzYyNTI3MDZ9.Pw7S-u-3XWmEhhihn-eiroOe_3vB0-g_EPzJSxniQdE
+
+
+## Appointment Details 
+
+GET /api/v1/appointments/65abc8094c64571b76fe3c2f HTTP/1.1
+Host: Host: {{host}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiMTAgbWluIG1haWwiLCJlbWFpbCI6ImJlZjA1MTIwQHpzbHN6LmNvbSIsImlkIjoiNjVhYjhmOTczZjE1NGYyMDM0YzdjZWVjIiwidHlwZSI6InVzZXIiLCJkYXRhIjp7InR5cGUiOiJ1c2VyIn19LCJpYXQiOjE3MDU3NDIyMzIsImV4cCI6MTczNjg0NjIzMn0.L3-TWiffKfYAfAZl8Cag4qWzIFvDlBQeqXrn4l0D19s
+
+
+
+## My Appointments
+
+GET /api/v1/appointments/my-appointments HTTP/1.1
+Host: {{host}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiMTAgbWluIG1haWwiLCJlbWFpbCI6ImJlZjA1MTIwQHpzbHN6LmNvbSIsImlkIjoiNjVhYjhmOTczZjE1NGYyMDM0YzdjZWVjIiwidHlwZSI6InVzZXIiLCJkYXRhIjp7InR5cGUiOiJ1c2VyIn19LCJpYXQiOjE3MDU3NDIyMzIsImV4cCI6MTczNjg0NjIzMn0.L3-TWiffKfYAfAZl8Cag4qWzIFvDlBQeqXrn4l0D19s
+
+
+## Book New appointment
+
+POST /api/v1/appointments/book-appointment HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiMTAgbWluIG1haWwiLCJlbWFpbCI6ImJlZjA1MTIwQHpzbHN6LmNvbSIsImlkIjoiNjVhYjhmOTczZjE1NGYyMDM0YzdjZWVjIiwidHlwZSI6InVzZXIiLCJkYXRhIjp7InR5cGUiOiJ1c2VyIn19LCJpYXQiOjE3MDU3NDIyMzIsImV4cCI6MTczNjg0NjIzMn0.L3-TWiffKfYAfAZl8Cag4qWzIFvDlBQeqXrn4l0D19s
+Content-Length: 65
+
+   {
+            "appointment_id": "65abc8094c64571b76fe3c32"
+ }
+
+## Create new swap request
+
+POST /api/v1/appointments/swap-appointment HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZTYzOTkxZWY4YjZiMTcyNWJlNWIiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5ODMzMCwiZXhwIjoxNzM0OTAyMzMwfQ.61gyvwa4IWMIF23x6PiPgYQEkwsjqK97IUmp6geCINk
+Content-Length: 65
+
+   {
+            "appointment_id": "65abc8094c64571b76fe3c2f"
+ }
+
+
+## Get all own swap request
+
+GET /api/v1/appointments/my-swap-requests HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVsbG8iLCJlbWFpbCI6InNhamphZEBuYXNtaXMuY29tIiwiaWQiOiI2NThkZTYzOTkxZWY4YjZiMTcyNWJlNWIiLCJ0eXBlIjoidXNlciIsImRhdGEiOnsidHlwZSI6InVzZXIifX0sImlhdCI6MTcwMzc5ODMzMCwiZXhwIjoxNzM0OTAyMzMwfQ.61gyvwa4IWMIF23x6PiPgYQEkwsjqK97IUmp6geCINk
+Content-Length: 65
+
+   {
+            "appointment_id": "65abc8094c64571b76fe3c32"
+ }
+
+
+## Response swap request
+
+POST /api/v1/appointments/response-swap-request HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiMTAgbWluIG1haWwiLCJlbWFpbCI6ImJlZjA1MTIwQHpzbHN6LmNvbSIsImlkIjoiNjVhYjhmOTczZjE1NGYyMDM0YzdjZWVjIiwidHlwZSI6InVzZXIiLCJkYXRhIjp7InR5cGUiOiJ1c2VyIn19LCJpYXQiOjE3MDU3NDIyMzIsImV4cCI6MTczNjg0NjIzMn0.L3-TWiffKfYAfAZl8Cag4qWzIFvDlBQeqXrn4l0D19s
+Content-Length: 91
+
+   {
+           "swap_request_id": "65abdf49b1f7114761be826c",
+           "status":true
+ }
