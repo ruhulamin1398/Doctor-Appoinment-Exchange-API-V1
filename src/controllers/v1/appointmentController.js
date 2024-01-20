@@ -1,127 +1,88 @@
 const asyncHandler = require("express-async-handler");
-const DoctorProfile = require("../../models/doctorProfileModel");
+const Appointment = require("../../models/appointmentModel");
+ 
 const { response } = require("express");
+const SwapAppontment = require("../../models/swapAppontmentModel");
 
-// @desc    Create a doctor profile
-// @route   POST /api/v1/doctors
-// @access  Public
-const createDoctorProfile = asyncHandler(async (req, res) => {
- 
-  const { name, img, rating, degree, designation, location, availableDate, availableTime } = req.body;
-  const  user_id= req.user.id;
-  const doctor = await DoctorProfile.findOne({ user_id});
-  
-  if(doctor){
+// @desc    book a doctor appointment
+// @route   POST /api/v1/book-appointment
+// @access  Public 
+const BookAppointment = asyncHandler(async (req, res) => {
+  const { appointment_id } = req.body;
+  const patient_user_id = req.user.id;
+
+  const appointment = await Appointment.findById(appointment_id);
+  if(appointment.patient_user_id){
     res.status(400);
-    throw new Error("Doctor Profile Already Exist");
-
-
+    throw new Error("Appointment Already Booked")
   }
 
+  try {
+    await Appointment.findByIdAndUpdate(
+      appointment.id,
+      { $set: { "patient_user_id": patient_user_id, "status": 1 } },
+      { new: true }
+    );
+  }
+  catch (err) {
+    res.status(500);
+    throw new Error("Some things went worong , Please try again")
+  }
+
+
+  res.status(201).json(
+    {
+      "Appointment":await Appointment.findById(appointment_id),
+      "msg": "Appointment booked Successful !!",
   
- 
-  const doctorProfile = await DoctorProfile.create({
-    name,
-    user_id,
-    img,
-    rating,
-    degree,
-    location,
-    designation,
-    availableDate,
-    availableTime,
-  });
+    }
+  )
 
-  res.status(201).json({
-    msg: "Doctor profile created successfully",
-    doctorProfile,
-  });
 });
 
-// @desc    Get all doctor profiles
-// @route   GET /api/v1/doctors
-// @access  Public
-const getAllDoctorProfiles = asyncHandler(async (req, res) => {
-  console.log(" all Doctor profile called")
- 
-  const doctorProfiles = await DoctorProfile.find();
-  res.status(200).json({
-    doctorProfiles,
-  });
-});
 
-// @desc    Get a single doctor profile
-// @route   GET /api/v1/doctors/:id
-// @access  Public
-const getDoctorProfileById = asyncHandler(async (req, res) => {
+// @desc    swap a doctor appointment
+// @route   POST /api/v1/swap-appointment
+// @access  Public 
+const SwapAppointment = asyncHandler(async (req, res) => {
+  const { appointment_id } = req.body;
+  const user_id = req.user.id;
 
-  const  user_id= req.params.id;
-  const doctorProfile = await DoctorProfile.findOne({ user_id});
-   
-
-  if (!doctorProfile) {
-    res.status(404);
-    throw new Error("Doctor profile not found");
+  const appointment = await Appointment.findById(appointment_id);
+  
+  if(!appointment.patient_user_id){
+    res.status(400);
+    throw new Error("Appointment Not Booked Yet")
   }
 
-  res.status(200).json({
-    doctorProfile,
-  });
-});
-
-// @desc    Update a doctor profile
-// @route   PUT /api/v1/doctors
-// @access  Public
-const updateDoctorProfile = asyncHandler(async (req, res) => {
-  const { name, img, rating, degree, location, designation,availableDate, availableTime } = req.body;
-
-  const  user_id= req.user.id;
-  const doctorProfile = await DoctorProfile.findOne({ user_id});
-
-  if (!doctorProfile) {
-    res.status(404);
-    throw new Error("Doctor profile not found");
-  }
-
-  doctorProfile.name = name || doctorProfile.name;
-  doctorProfile.img = img || doctorProfile.img;
-  doctorProfile.rating = rating || doctorProfile.rating;
-  doctorProfile.degree = degree || doctorProfile.degree;
-  doctorProfile.location = location || doctorProfile.location; 
-  doctorProfile.designation = designation || doctorProfile.designation;
-  doctorProfile.availableDate = availableDate || doctorProfile.availableDate;
-  doctorProfile.availableTime = availableTime || doctorProfile.availableTime;
-
-  await doctorProfile.save();
-
-  res.status(200).json({
-    msg: "Doctor profile updated successfully",
-    doctorProfile,
-  });
-});
-
-// @desc    Delete a doctor profile
-// @route   DELETE /api/v1/doctors/:id
-// @access  Public
-const deleteDoctorProfile = asyncHandler(async (req, res) => {
-
-  const  user_id= req.user.id;
-  const doctorProfile = await DoctorProfile.findOne({ user_id});
-
  
+  const swapAppointment = await SwapAppontment.create({
+    appointment_id,
+    "patient_user_id":appointment.patient_user_id,
+    "requested_user_id":user_id,
+})
 
-  if (!doctorProfile) {
-    res.status(404);
-    throw new Error("Doctor profile not found");
-  }
-   
-  // await doctorProfile.remove();
-  await DoctorProfile.deleteOne({ user_id});
+
+try {
+  await Appointment.findByIdAndUpdate(
+    appointment.id,
+    { $set: {  "status": 2 } },
+    { new: true }
+  );
+}
+catch (err) {
+  res.status(500);
+  throw new Error("Some things went worong , Please try again")
+}
 
   res.status(200).json({
-    msg: "Doctor profile deleted successfully",
-  });
+    appointment,
+    "hi":"hello",
+  })
 });
 
-module.exports = { 
+
+module.exports = {
+  BookAppointment,
+  SwapAppointment
 };

@@ -46,9 +46,12 @@ const doctorProfileSchema = mongoose.Schema(
         "Friday"
     ],
     },
-    availableTime: {
+    availableTimes: {
       type: [String], // Array of time in 24-hour format
-      required: [true, "Please add the doctor's available times"],
+      default:[
+        "09:00",
+        "14:00"
+    ]
     },
   },
   {

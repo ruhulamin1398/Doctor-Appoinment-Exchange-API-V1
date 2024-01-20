@@ -13,6 +13,10 @@ const path = require('path'); // Add this line
 const userRoute = require("./routers/v1/userRoutes");
 const contactRoutes = require("./routers/v1/contactRoutes");
 const doctorRoute = require("./routers/v1/doctorRoutes");
+const appointmentsRoutes = require("./routers/v1/appointmentsRoutes");
+
+
+
 const wordRoutes = require("./routers/v1/wordRoutes"); 
 const AsyncHandler = require("express-async-handler");
 const User = require("./models/userModel");
@@ -58,6 +62,9 @@ app.use('/api/v1/users', userRoute);
 app.use('/api/v1/doctors', doctorRoute);
 
 app.use('/api/v1/contacts', contactRoutes);
+app.use('/api/v1/appointments', appointmentsRoutes);
+
+
 app.use( wordRoutes);
  
 

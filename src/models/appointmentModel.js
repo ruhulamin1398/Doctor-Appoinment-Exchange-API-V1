@@ -1,3 +1,6 @@
+
+
+const User = require("./userModel");
 const mongoose = require("mongoose");
 
 
@@ -9,27 +12,33 @@ const appointmentSchema = mongoose.Schema(
       ref: "User",
     },
     
-    type: {
-      type: String,
-      default: "user",
-    },    
-    token: {
-      type: String,
-      default: "",
-    },
-    
-    verification_code: {
-      type: Number,
-      default: 0,
-    },
+    patient_user_id: {
+      type: mongoose.Schema.Types.ObjectId,
 
-    expiresAt: {
-      type: Date,
-      default: function() {
-        // Set the expiration time to, for example, 24 hours from now
-        return new Date(new Date().getTime() +  30 * 60 * 1000);
-      },
+      ref: "User",
     },
+    date: {
+      type: Date,
+      required: true,
+    },
+    day: {
+      type: String,
+      required: true,
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+    unixTimestamp: {
+      type: Number,
+      required: true,
+    },
+    status: {
+      type: Number,
+      default:0,
+    },
+  
+
   },
   {
     timestamps: true,
@@ -37,4 +46,17 @@ const appointmentSchema = mongoose.Schema(
 );
 
 
-module.exports = mongoose.model("VerificationCode", verificationCodeSchema);
+appointmentSchema.virtual("patient", {
+  ref: "User", // The model to use for populating the virtual field
+  localField: "patient_user_id",
+  foreignField: "_id",
+  justOne: true,
+});
+
+
+// Apply the virtual field when querying
+appointmentSchema.set("toObject", { virtuals: true });
+appointmentSchema.set("toJSON", { virtuals: true });
+
+
+module.exports = mongoose.model("Appointment", appointmentSchema);
