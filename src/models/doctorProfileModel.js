@@ -31,9 +31,20 @@ const doctorProfileSchema = mongoose.Schema(
       type: String,
       default: "",
     },
-    availableDate: {
+
+
+
+    advanceDay: {
+      type: Number,
+      default: 10,
+    },    
+    availableDays: {
       type: [String], // Array of days
-      required: [true, "Please add the doctor's available dates"],
+      default:[
+        "Monday",
+        "Wednesday",
+        "Friday"
+    ],
     },
     availableTime: {
       type: [String], // Array of time in 24-hour format

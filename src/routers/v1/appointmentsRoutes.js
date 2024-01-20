@@ -5,7 +5,6 @@ const {
   getDoctorProfileById,
   updateDoctorProfile,
   deleteDoctorProfile,
-  getDoctorAppointments
 } = require("../../controllers/v1/doctorProfileController");
 const validateToken = require("../../middleware/v1/validateTokenHandler");
 
@@ -36,10 +35,5 @@ router.put("/", updateDoctorProfile);
 // @route   DELETE /api/v1/doctors/:id
 // @access  Public
 router.delete("/",  deleteDoctorProfile);
-
-// @desc    Get a single doctor profile
-// @route   GET /api/v1/doctors/:id
-// @access  Public
-router.get("/:id/appointments",  getDoctorAppointments);
 
 module.exports = router;

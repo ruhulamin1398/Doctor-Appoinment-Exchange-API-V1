@@ -123,43 +123,5 @@ const deleteDoctorProfile = asyncHandler(async (req, res) => {
   });
 });
 
-
-
-// @desc    Get a doctor appointments
-// @route   GET /api/v1/doctors/:id/appointments
-// @access  Public
-const getDoctorAppointments = asyncHandler(async (req, res) => {
-
-  const  user_id= req.params.id;
-  const doctorProfile = await DoctorProfile.findOne({ user_id});
-
-
-  // first need to check all appointment created or not
-  // then create remaining appointments
-
-  unixTimestamp = new Date().getTime();
-  
-
-  res.json(unixTimestamp)
-   
-
-  if (!doctorProfile) {
-    res.status(404);
-    throw new Error("Doctor profile not found");
-  }
-
-  res.status(200).json({
-    doctorProfile,
-  });
-});
-
-
-
-module.exports = {
-  createDoctorProfile,
-  getAllDoctorProfiles,
-  getDoctorProfileById,
-  updateDoctorProfile,
-  deleteDoctorProfile,
-  getDoctorAppointments,
+module.exports = { 
 };
