@@ -8,6 +8,10 @@ const swapappointmentSchema = mongoose.Schema(
       required: true,
       ref: "Appointment",
     },
+    unixTimestamp: {
+      type: Number,
+      required: true,
+    },
     
     patient_user_id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -22,8 +26,12 @@ const swapappointmentSchema = mongoose.Schema(
       ref: "User",
     },
      
- 
-    status: {
+    
+    amount: {
+      type:Number,
+      default: 5,
+      
+    },    status: {
       type:Number,
       default: 0,
       
