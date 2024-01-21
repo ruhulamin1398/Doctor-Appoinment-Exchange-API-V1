@@ -240,6 +240,19 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
       { new: true }
     );
 
+    res.status(200).json(
+      {
+        "msg":"Request cencel Successfull",
+        "appointment":await Appointment.findById(swapRequest.appointment_id),
+
+       
+      }
+    )
+
+
+
+    
+
   }
 
   if (swapRequest.patient_user_id == user_id) {
