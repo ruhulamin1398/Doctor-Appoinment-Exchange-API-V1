@@ -76,10 +76,10 @@
 <body>
 
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark " style="background-color:#030710 !important">
+  <nav class="navbar  navbar-dark bg-dark " style="background-color:#030710 !important">
     <div class="container">
         <a class="navbar-brand" href="words">Chandrabindhu</a>
-        <a class="navbar-brand" href="ck-word">ck</a>
+        <a class="navbar-brand" href="ck-word">CK</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -99,8 +99,10 @@
 </nav>
 
   <div class="container">
+
+    <h2 id="cattitle" class="mt-5"> </h2>
     <div class="word-container">
-      <h2 id="category-title">Select a category to view words.</h2>
+      <h2 id="category-title"></h2>
       <div id="word-detail"></div>
       <div class="text-center my-5  ">
         <button class="btn btn-outline-primary" id="prev-btn">Previous</button>
@@ -126,6 +128,10 @@
   currentWordIndex = 0; // Reset word index when changing categories
   showWordDetail(allWords[categoryIndex].items[currentWordIndex]);
   displayWordList(allWords[categoryIndex].items);
+
+  // cattitle
+  $('#cattitle').html(`<div>${category} </div>`);
+   
 }
 function showWordDetail(word) {
   $('#category-title').text(` ${word}`);
