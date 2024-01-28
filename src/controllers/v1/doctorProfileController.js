@@ -173,8 +173,14 @@ const getDoctorAppointments = asyncHandler(async (req, res) => {
     unixTimestamp: { $gt: currentUnixTimestamp },
   }).populate("patient");;
 
+  const groupedByDay = groupAppointmentsByDay(existingAppointments);
+  console.log(groupedByDay)
+
+
+
+
   res.status(200).json({
-    appointments:existingAppointments,
+    appointments:groupedByDay,
   })
 
 });
@@ -214,7 +220,21 @@ function generateSchedules(startDate, availableDays, availableTime, numberOfDays
   return schedules;
 }
 
+const groupAppointmentsByDay = (appointments) => {
+  const groupedAppointments = {};
 
+  appointments.forEach((appointment) => {
+    const dateKey = appointment.date.toISOString().split('T')[0]; // Extract YYYY-MM-DD
+
+    if (!groupedAppointments[dateKey]) {
+      groupedAppointments[dateKey] = [];
+    }
+
+    groupedAppointments[dateKey].push(appointment);
+  });
+
+  return groupedAppointments;
+};
 
 
 module.exports = {
