@@ -52,7 +52,12 @@ appointmentSchema.virtual("patient", {
   foreignField: "_id",
   justOne: true,
 });
-
+appointmentSchema.virtual("swap-request", {
+  ref: "SwapAppointment", // The model to use for populating the virtual field
+  localField: "_id",
+  foreignField: "appointment_id",
+  justOne: true,
+});
 
 // Apply the virtual field when querying
 appointmentSchema.set("toObject", { virtuals: true });

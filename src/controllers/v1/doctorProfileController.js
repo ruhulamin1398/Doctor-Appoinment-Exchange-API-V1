@@ -171,7 +171,7 @@ const getDoctorAppointments = asyncHandler(async (req, res) => {
   const existingAppointments = await Appointment.find({
     doctor_user_id:user_id,
     unixTimestamp: { $gt: currentUnixTimestamp },
-  }).populate("patient");;
+  }).populate("patient").populate("swap-request");;
 
   const groupedByDay = groupAppointmentsByDay(existingAppointments);
   console.log(groupedByDay)
