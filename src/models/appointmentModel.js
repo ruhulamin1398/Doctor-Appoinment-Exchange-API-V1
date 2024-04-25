@@ -56,8 +56,15 @@ appointmentSchema.virtual("swap-request", {
   ref: "SwapAppointment", // The model to use for populating the virtual field
   localField: "_id",
   foreignField: "appointment_id",
+  justOne: false,
+});
+appointmentSchema.virtual("doctor", {
+  ref: "DoctorProfile", // The model to use for populating the virtual field
+  localField: "doctor_user_id",
+  foreignField: "user_id",
   justOne: true,
 });
+
 
 // Apply the virtual field when querying
 appointmentSchema.set("toObject", { virtuals: true });

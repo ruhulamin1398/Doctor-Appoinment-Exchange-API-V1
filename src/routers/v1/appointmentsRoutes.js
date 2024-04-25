@@ -5,7 +5,8 @@ const {
   GetAppointmentDetails,
   GetMyAppointment,
   GetMySwapRequests,
-  ResponseSwapRequest
+  ResponseSwapRequest,
+  GetSwapRequestById
  
 } = require("../../controllers/v1/appointmentController");
 const validateToken = require("../../middleware/v1/validateTokenHandler");
@@ -35,6 +36,10 @@ router.get("/my-appointments", GetMyAppointment);
 // @route   GET /api/v1/appointments/my-swap-requests
 // @access  Public 
 router.get("/my-swap-requests", GetMySwapRequests);
+// @desc    my swap request
+// @route   GET /api/v1/appointments/my-swap-requests
+// @access  Public 
+router.get("/get-swap-request/:id", GetSwapRequestById);
  
  // @desc    response swap request
 // @route   GET /api/v1/appointments/response-swap-request

@@ -15,7 +15,16 @@ const GetAppointmentDetails = asyncHandler(async (req, res) => {
  
   const appointment_id = req.params.id;
 
-  const appointment = await Appointment.findById(appointment_id).populate("patient");
+
+
+  const appointment = await Appointment.findById(appointment_id).populate({
+    path: 'patient', 
+    select: '_id username email', 
+  }).populate({
+    path: 'requested_patient', 
+    select: '_id username email', 
+  }).populate("doctor")
+  .populate("swap-request");
   if (!appointment) {
     res.status(404);
     throw new Error("Appointment Not Found")
@@ -81,11 +90,11 @@ const GetMyAppointment = asyncHandler(async (req, res) => {
   const scheduledAppointments = await Appointment.find({
     patient_user_id,
     unixTimestamp: { $gt: currentUnixTimestamp },
-  });
+  }).populate("doctor");
   const pastAappointments = await Appointment.find({
     patient_user_id,
     unixTimestamp: { $lt: currentUnixTimestamp },
-  });
+  }).populate("doctor") ;
 
 
   res.status(200).json(
@@ -131,6 +140,7 @@ const SwapAppointment = asyncHandler(async (req, res) => {
   const swapAppointment = await SwapAppontment.create({
     appointment_id,
     "patient_user_id": appointment.patient_user_id,
+    "doctor_user_id": appointment.doctor_user_id,
     "unixTimestamp": appointment.unixTimestamp,
     "requested_user_id": user_id,
   })
@@ -169,21 +179,55 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
   const nextSendSwapRequests = await SwapAppontment.find({
     "requested_user_id": user_id,
     unixTimestamp: { $gt: currentUnixTimestamp },
-  });
+  }).populate({
+    path: 'patient', 
+    select: '_id username email', 
+  }).populate({
+    path: 'requested_patient', 
+    select: '_id username email', 
+  }).populate('appointment')
+  .populate('doctor');
+
+
   const prevSendSwapRequests = await SwapAppontment.find({
     "requested_user_id": user_id,
     unixTimestamp: { $lt: currentUnixTimestamp },
-  });
+  }).populate({
+    path: 'patient', 
+    select: '_id username email', 
+  }).populate({
+    path: 'requested_patient', 
+    select: '_id username email', 
+  }).populate('appointment')
+  .populate('doctor');
 
 
   const nextGetSwapRequests = await SwapAppontment.find({
     "patient_user_id": user_id,
     unixTimestamp: { $gt: currentUnixTimestamp },
-  });
+  }).populate({
+    path: 'patient', 
+    select: '_id username email', 
+  }).populate({
+    path: 'requested_patient', 
+    select: '_id username email', 
+  }).populate('appointment')
+  .populate('doctor');
+
+
   const prevGetSwapRequests = await SwapAppontment.find({
     "patient_user_id": user_id,
     unixTimestamp: { $lt: currentUnixTimestamp },
-  });
+  }).populate({
+    path: 'patient', 
+    select: '_id username email', 
+  }).populate({
+    path: 'requested_patient', 
+    select: '_id username email', 
+  }).populate('appointment')
+  .populate('doctor');
+
+
 
 
   res.status(200).json(
@@ -201,6 +245,45 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
     }
   )
 });
+
+
+
+// @desc    Get a single appointment
+// @route   GET /api/v1/get-swap-request/:id
+// @access  Public
+const GetSwapRequestById = asyncHandler(async (req, res) => {
+ 
+  const swap_request_id = req.params.id;
+
+ 
+
+  const swapRequest =  await SwapAppontment.findByIdAndUpdate(
+    swap_request_id,
+    { isViewed: 1 },
+    { new: true }
+  );
+
+
+ 
+
+
+
+  if (!swapRequest) {
+    res.status(404);
+    throw new Error("swap request Not Found")
+  }
+
+ 
+
+
+  res.status(200).json(
+    {
+       swapRequest,
+    }
+  )
+
+});
+
 
 
 
@@ -288,6 +371,9 @@ await SwapAppontment.findByIdAndUpdate(
 console.log("accepted")
 // update appointment
 
+
+
+
 await Appointment.findByIdAndUpdate(
   swapRequest.appointment_id,
   { $set: { "patient_user_id": requestSender.id, "status": 0 } },
@@ -328,5 +414,7 @@ module.exports = {
   SwapAppointment,
   GetMyAppointment,
   GetMySwapRequests,
+  GetSwapRequestById,
   ResponseSwapRequest
+
 };
