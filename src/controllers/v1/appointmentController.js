@@ -261,7 +261,14 @@ const GetSwapRequestById = asyncHandler(async (req, res) => {
     swap_request_id,
     { isViewed: 1 },
     { new: true }
-  );
+  ).populate({
+    path: 'patient', 
+    select: '_id username email', 
+  }).populate({
+    path: 'requested_patient', 
+    select: '_id username email', 
+  }).populate('appointment')
+  .populate('doctor');;
 
 
  
