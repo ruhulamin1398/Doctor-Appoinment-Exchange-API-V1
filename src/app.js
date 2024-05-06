@@ -22,6 +22,7 @@ const AsyncHandler = require("express-async-handler");
 const User = require("./models/userModel");
 const VerificationCode  = require("./models/verificationCodeModel"); 
 const doctorProfile = require("./models/doctorProfileModel");
+const appointmentModel = require("./models/appointmentModel");
 
 
 // Middleware to parse JSON in the request body
@@ -38,11 +39,13 @@ app.get('/hi', AsyncHandler(async(req,res)=>{
 app.get('/clean-data', AsyncHandler(async(req,res)=>{
   
   
-  await User.deleteMany({});
-  await doctorProfile.deleteMany({});
-  await VerificationCode.deleteMany({})
+  // await User.deleteMany({});
+  // await doctorProfile.deleteMany({});
+  // await VerificationCode.deleteMany({})
+  const result = await appointmentModel.find({})
+
    
- res.json({ "msg" : "All data was deleted " })
+ res.json({result })
 
 }));
 

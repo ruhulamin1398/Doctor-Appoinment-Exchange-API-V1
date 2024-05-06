@@ -10,7 +10,7 @@ const createDoctorProfile = asyncHandler(async (req, res) => {
 
   const { name, img, rating, degree, designation, location, availableDate, availableTime } = req.body;
   const user_id = req.user.id;
-  const doctor = await DoctorProfile.findOne({ user_id });
+  const doctor = await DoctorProfile.findOne({ user_id: user_id });
 
   if (doctor) {
     res.status(400);
@@ -134,8 +134,13 @@ const getDoctorAppointments = asyncHandler(async (req, res) => {
   const user_id = req.params.id;
   const doctorProfile = await DoctorProfile.findOne({ user_id });
 
+  if (!doctorProfile) {
+    res.status(400);
+    throw new Error("Doctor Profile Doesn't Exist");
 
 
+  }
+  
   const startDate = new Date(); // Use the current date as the starting point
 
 
@@ -147,6 +152,7 @@ const getDoctorAppointments = asyncHandler(async (req, res) => {
     doctorProfile.user_id,
   );
 
+  
 
   for (const appointment of appointments) {
     const { doctor_user_id, unixTimestamp } = appointment;

@@ -65,18 +65,18 @@ const registerUser = asyncHandler(async (req, res) => {
 
         /// creating a doctor profile 
 
-        const doctor = await DoctorProfile.create({
-            name:username,
-            "user_id":user.id,
-            "img": "https://example.com/doctor_image.jpg",
-            "rating": 4.5,
-            "degree": "MBBS",
-            "location": "City Hospital",
-            "availableDate": ["Monday", "Wednesday", "Friday"],
-            "availableTime": ["09:00", "14:00"]
+        // const doctor = await DoctorProfile.create({
+        //     name:username,
+        //     "user_id":user.id,
+        //     "img": "https://example.com/doctor_image.jpg",
+        //     "rating": 4.5,
+        //     "degree": "MBBS",
+        //     "location": "City Hospital",
+        //     "availableDate": ["Monday", "Wednesday", "Friday"],
+        //     "availableTime": ["09:00", "14:00"]
 
             
-        })
+        // })
 
 
  

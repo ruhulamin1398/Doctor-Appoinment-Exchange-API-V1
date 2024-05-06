@@ -178,6 +178,7 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
   const currentUnixTimestamp = Math.floor(new Date().getTime() / 1000);
   const nextSendSwapRequests = await SwapAppontment.find({
     "requested_user_id": user_id,
+    "status": 1,
     unixTimestamp: { $gt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
@@ -191,6 +192,7 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
 
   const prevSendSwapRequests = await SwapAppontment.find({
     "requested_user_id": user_id,
+    "status": 1,
     unixTimestamp: { $lt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
@@ -204,6 +206,7 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
 
   const nextGetSwapRequests = await SwapAppontment.find({
     "patient_user_id": user_id,
+    "status": 1,
     unixTimestamp: { $gt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
@@ -217,6 +220,7 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
 
   const prevGetSwapRequests = await SwapAppontment.find({
     "patient_user_id": user_id,
+    "status": 1,
     unixTimestamp: { $lt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
@@ -304,7 +308,18 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
   const { swap_request_id, status } = req.body
 
 
+  
+
+
   const swapRequest = await SwapAppontment.findById(swap_request_id);
+  
+
+
+
+  const appointment_id = swapRequest.appointment_id;
+ 
+ 
+
   if (!swapRequest) {
     res.status(404);
     throw new Error("swapRequest Not Found")
@@ -322,11 +337,14 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
   }
 
 
+
+
+
   if (!status) {
 
     await SwapAppontment.findByIdAndUpdate(
       swapRequest.id,
-      { status: 3 },
+      { status: 1 },
       { new: true }
     );
 
@@ -368,6 +386,19 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
     );
 // status change 
 
+
+const allSwapAppointment = await SwapAppontment.find({appointment_id})
+for (const srequest of allSwapAppointment) {
+  await SwapAppontment.findByIdAndUpdate(
+    srequest.id,
+    { status: 3 },
+    { new: true }
+  );
+}
+
+
+
+
 await SwapAppontment.findByIdAndUpdate(
   swapRequest.id,
   { status:2 },
@@ -383,7 +414,7 @@ console.log("accepted")
 
 await Appointment.findByIdAndUpdate(
   swapRequest.appointment_id,
-  { $set: { "patient_user_id": requestSender.id, "status": 0 } },
+  { $set: { "patient_user_id": requestSender.id } },
   
   { new: true }
 );
