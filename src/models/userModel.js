@@ -33,7 +33,10 @@ const userSchema = mongoose.Schema(
       type: Number,
       default: 1000,
     },
-
+    firebase_token: {
+      type: String,
+      default: "",
+    },
     
     
   },

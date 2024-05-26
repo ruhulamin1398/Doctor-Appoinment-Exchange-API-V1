@@ -195,6 +195,49 @@ const updateUserToken = asyncHandler(async (req, res) => {
 
 
 
+//@des login udate firebase token 
+//@route POST /api/v1/users/update-firebase-token
+//@access public 
+
+const updateFirebaseToken = asyncHandler(async (req, res) => {
+    const { email } = req.user;
+    const {firebase_token} = req.body
+
+    const user = await User.findOne({ email });
+
+
+
+    if (user) {
+
+        await User.findByIdAndUpdate(
+            user.id,
+            { firebase_token: firebase_token },
+            { new: true }
+        );
+
+        if (!firebase_token) {
+            res.status(500);
+            throw new Error("Some things went worong , Please try again")
+        }
+
+
+    }
+
+    res.status(200)
+    res.json({
+
+        "msg": "Token update Successful",
+        "token": firebase_token,
+    })
+
+
+
+
+})
+
+
+
+
 
 //@des current user 
 //@route POST /api/v1/users/currentuser
@@ -480,4 +523,4 @@ const generateJwtToken = asyncHandler(async (_username, _email, _id, time, data)
 
 
 
-module.exports = { registerUser, loginUser, currentUser, reSendVerificationOTP, verifyUserOtpToken, updateUserToken };
+module.exports = { registerUser, loginUser, currentUser, reSendVerificationOTP, verifyUserOtpToken, updateUserToken , updateFirebaseToken};

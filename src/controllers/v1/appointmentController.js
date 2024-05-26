@@ -19,10 +19,10 @@ const GetAppointmentDetails = asyncHandler(async (req, res) => {
 
   const appointment = await Appointment.findById(appointment_id).populate({
     path: 'patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate({
     path: 'requested_patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate("doctor")
   .populate("swap-request");
   if (!appointment) {
@@ -182,10 +182,10 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
     unixTimestamp: { $gt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate({
     path: 'requested_patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate('appointment')
   .populate('doctor');
 
@@ -196,10 +196,10 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
     unixTimestamp: { $lt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate({
     path: 'requested_patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate('appointment')
   .populate('doctor');
 
@@ -210,10 +210,10 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
     unixTimestamp: { $gt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate({
     path: 'requested_patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate('appointment')
   .populate('doctor');
 
@@ -224,10 +224,10 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
     unixTimestamp: { $lt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate({
     path: 'requested_patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate('appointment')
   .populate('doctor');
 
@@ -267,10 +267,10 @@ const GetSwapRequestById = asyncHandler(async (req, res) => {
     { new: true }
   ).populate({
     path: 'patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate({
     path: 'requested_patient', 
-    select: '_id username email', 
+    select: '_id username email firebase_token', 
   }).populate('appointment')
   .populate('doctor');;
 

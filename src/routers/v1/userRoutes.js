@@ -6,6 +6,7 @@ const {
   verifyUserOtpToken,
   reSendVerificationOTP,
   updateUserToken,
+  updateFirebaseToken,
 } = require("../../controllers/v1/userController");
 const validateToken = require("../../middleware/v1/validateTokenHandler");
 const checkUserIsActive = require("../../middleware/v1/userIsActiveHandler");
@@ -21,5 +22,7 @@ router.post("/resend-verification-email", validateToken, reSendVerificationOTP);
 router.get("/verify-user-otp-token", validateToken, verifyUserOtpToken);
 
 router.put("/update-user-token", validateToken, updateUserToken);
+router.put("/update-firebase-token", validateToken, updateFirebaseToken);
+
 
 module.exports = router;
