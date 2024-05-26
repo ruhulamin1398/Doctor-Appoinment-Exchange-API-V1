@@ -45,7 +45,7 @@ const swapappointmentSchema = mongoose.Schema(
     },    status: {
       type:Number,
       default: 0,
-      
+      /// 0:new request /// 1: accepted /// 2:rejected
     },
        
   

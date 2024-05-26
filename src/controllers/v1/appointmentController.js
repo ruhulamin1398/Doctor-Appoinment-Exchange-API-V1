@@ -178,7 +178,7 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
   const currentUnixTimestamp = Math.floor(new Date().getTime() / 1000);
   const nextSendSwapRequests = await SwapAppontment.find({
     "requested_user_id": user_id,
-    "status": 1,
+    "status": 0,
     unixTimestamp: { $gt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
@@ -192,7 +192,7 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
 
   const prevSendSwapRequests = await SwapAppontment.find({
     "requested_user_id": user_id,
-    "status": 1,
+    "status": 0,
     unixTimestamp: { $lt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
@@ -206,7 +206,7 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
 
   const nextGetSwapRequests = await SwapAppontment.find({
     "patient_user_id": user_id,
-    "status": 1,
+    "status": 0,
     unixTimestamp: { $gt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
@@ -220,7 +220,7 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
 
   const prevGetSwapRequests = await SwapAppontment.find({
     "patient_user_id": user_id,
-    "status": 1,
+    "status": 0,
     unixTimestamp: { $lt: currentUnixTimestamp },
   }).populate({
     path: 'patient', 
@@ -232,7 +232,7 @@ const GetMySwapRequests = asyncHandler(async (req, res) => {
   .populate('doctor');
 
 
-
+  
 
   res.status(200).json(
     {
@@ -307,17 +307,9 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
   const user_id = req.user.id;
   const { swap_request_id, status } = req.body
 
-
-  
-
-
   const swapRequest = await SwapAppontment.findById(swap_request_id);
   
-
-
-
   const appointment_id = swapRequest.appointment_id;
- 
  
 
   if (!swapRequest) {
@@ -325,13 +317,13 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
     throw new Error("swapRequest Not Found")
   }
 
-  if (swapRequest.status ==2) {
+  if (swapRequest.status ==1) {
     res.status(400);
     throw new Error("Already Accepted")
   }
 
 
-  if (swapRequest.status ==3) {
+  if (swapRequest.status ==2) {
     res.status(400);
     throw new Error("Already cancelled")
   }
@@ -344,13 +336,13 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
 
     await SwapAppontment.findByIdAndUpdate(
       swapRequest.id,
-      { status: 1 },
+      { status: 2 },
       { new: true }
     );
 
     res.status(200).json(
       {
-        "msg":"Request cencel Successfull",
+        "msg":"Request cencell Successfull",
         "appointment":await Appointment.findById(swapRequest.appointment_id),
 
        
@@ -391,7 +383,7 @@ const allSwapAppointment = await SwapAppontment.find({appointment_id})
 for (const srequest of allSwapAppointment) {
   await SwapAppontment.findByIdAndUpdate(
     srequest.id,
-    { status: 3 },
+    { status: 2 },
     { new: true }
   );
 }
@@ -401,7 +393,7 @@ for (const srequest of allSwapAppointment) {
 
 await SwapAppontment.findByIdAndUpdate(
   swapRequest.id,
-  { status:2 },
+  { status:1 },
   { new: true }
 );
 
