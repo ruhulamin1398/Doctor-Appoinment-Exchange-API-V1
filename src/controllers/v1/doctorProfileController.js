@@ -2,13 +2,15 @@ const asyncHandler = require("express-async-handler");
 const DoctorProfile = require("../../models/doctorProfileModel");
 const { response } = require("express");
 const Appointment = require("../../models/appointmentModel");
+const userModel = require("../../models/userModel");
+const doctorProfileModel = require("../../models/doctorProfileModel");
 
 // @desc    Create a doctor profile
 // @route   POST /api/v1/doctors
 // @access  Public
 const createDoctorProfile = asyncHandler(async (req, res) => {
 
-  const { name, img, rating, degree, designation, location, availableDate, availableTime } = req.body;
+  const { name, img, rating, degree, designation, location, availableDays, availableTimes } = req.body;
   const user_id = req.user.id;
   const doctor = await DoctorProfile.findOne({ user_id: user_id });
 
@@ -29,8 +31,8 @@ const createDoctorProfile = asyncHandler(async (req, res) => {
     degree,
     location,
     designation,
-    availableDate,
-    availableTime,
+    availableDays,
+    availableTimes,
   });
 
   res.status(201).json({
@@ -75,9 +77,9 @@ const getDoctorProfileById = asyncHandler(async (req, res) => {
 // @access  Public
 const updateDoctorProfile = asyncHandler(async (req, res) => {
   const { name, img, rating, degree, location, designation, availableDays, availableTimes } = req.body;
- 
-  const user_id = req.user.id;
-  const doctorProfile = await DoctorProfile.findOne({ user_id });
+  
+  const user_id = req.user.id;  
+  const doctorProfile = await doctorProfileModel.findOne({ "user_id":user_id });
 
   if (!doctorProfile) {
     res.status(404);

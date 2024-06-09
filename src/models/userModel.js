@@ -44,5 +44,13 @@ const userSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+userSchema.virtual("doctor", {
+  ref: "DoctorProfile", // The model to use for populating the virtual field
+  localField: "_id",
+  foreignField: "user_id",
+  justOne: true,
+});
 
+userSchema.set("toObject", { virtuals: true });
+userSchema.set("toJSON", { virtuals: true });
 module.exports = mongoose.model("User", userSchema);
