@@ -139,6 +139,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
             "msg": "login Successfull",
             "token": accessToken,
+            "firebase_token": user.firebase_token
         })
 
     }
@@ -227,7 +228,7 @@ const updateFirebaseToken = asyncHandler(async (req, res) => {
     res.json({
 
         "msg": "Token update Successful",
-        "token": firebase_token,
+        "firebase_token": firebase_token,
     })
 
 

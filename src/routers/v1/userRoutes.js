@@ -21,8 +21,8 @@ router.get("/current", validateToken, currentUser);
 router.post("/resend-verification-email", validateToken, reSendVerificationOTP);
 router.get("/verify-user-otp-token", validateToken, verifyUserOtpToken);
 
-router.put("/update-user-token", validateToken, updateUserToken);
-router.put("/update-firebase-token", validateToken, updateFirebaseToken);
+router.post("/update-user-token", validateToken, updateUserToken);
+router.post("/update-firebase-token", validateToken, updateFirebaseToken);
 
 
 module.exports = router;

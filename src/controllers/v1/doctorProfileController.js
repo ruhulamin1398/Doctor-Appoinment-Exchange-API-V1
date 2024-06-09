@@ -74,8 +74,8 @@ const getDoctorProfileById = asyncHandler(async (req, res) => {
 // @route   PUT /api/v1/doctors
 // @access  Public
 const updateDoctorProfile = asyncHandler(async (req, res) => {
-  const { name, img, rating, degree, location, designation, availableDate, availableTime } = req.body;
-
+  const { name, img, rating, degree, location, designation, availableDays, availableTimes } = req.body;
+ 
   const user_id = req.user.id;
   const doctorProfile = await DoctorProfile.findOne({ user_id });
 
@@ -90,8 +90,11 @@ const updateDoctorProfile = asyncHandler(async (req, res) => {
   doctorProfile.degree = degree || doctorProfile.degree;
   doctorProfile.location = location || doctorProfile.location;
   doctorProfile.designation = designation || doctorProfile.designation;
-  doctorProfile.availableDate = availableDate || doctorProfile.availableDate;
-  doctorProfile.availableTime = availableTime || doctorProfile.availableTime;
+  doctorProfile.availableDays = availableDays || doctorProfile.availableDays;
+  doctorProfile.availableTimes = availableTimes || doctorProfile.availableTimes;
+  
+  
+  console.log(doctorProfile)
 
   await doctorProfile.save();
 
