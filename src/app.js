@@ -8,8 +8,6 @@ const path = require('path'); // Add this line
 
 
 
-
-
 const userRoute = require("./routers/v1/userRoutes");
 const contactRoutes = require("./routers/v1/contactRoutes");
 const doctorRoute = require("./routers/v1/doctorRoutes");
@@ -30,9 +28,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/hi', AsyncHandler(async(req,res)=>{
-  // Update all existing documents to include the new fields
- await User.updateMany({}, { $set: { is_verified: false, verification_code: 0 } });
- res.json({ "msg" : "done"})
+  res.json({
+     
+  })
+  
+  
 
 }));
 // for no production only , please remove before deploy

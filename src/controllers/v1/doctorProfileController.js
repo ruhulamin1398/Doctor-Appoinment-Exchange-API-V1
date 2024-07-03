@@ -76,7 +76,7 @@ const getDoctorProfileById = asyncHandler(async (req, res) => {
 // @route   PUT /api/v1/doctors
 // @access  Public
 const updateDoctorProfile = asyncHandler(async (req, res) => {
-  const { name, img, rating, degree, location, designation, availableDays, availableTimes } = req.body;
+  const { name, img, rating, degree, location, designation, advanceDay, availableDays, availableTimes } = req.body;
   
   const user_id = req.user.id;  
   const doctorProfile = await doctorProfileModel.findOne({ "user_id":user_id });
@@ -92,6 +92,7 @@ const updateDoctorProfile = asyncHandler(async (req, res) => {
   doctorProfile.degree = degree || doctorProfile.degree;
   doctorProfile.location = location || doctorProfile.location;
   doctorProfile.designation = designation || doctorProfile.designation;
+  doctorProfile.advanceDay = advanceDay || doctorProfile.advanceDay;
   doctorProfile.availableDays = availableDays || doctorProfile.availableDays;
   doctorProfile.availableTimes = availableTimes || doctorProfile.availableTimes;
   
@@ -135,67 +136,68 @@ const deleteDoctorProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/doctors/:id/appointments
 // @access  Public
 const getDoctorAppointments = asyncHandler(async (req, res) => {
-
   const user_id = req.params.id;
   const doctorProfile = await DoctorProfile.findOne({ user_id });
 
   if (!doctorProfile) {
     res.status(400);
     throw new Error("Doctor Profile Doesn't Exist");
-
-
   }
-  
-  const startDate = new Date(); // Use the current date as the starting point
 
+  const startDate = new Date(); // Use the current date as the starting point
 
   const appointments = generateSchedules(
     startDate,
     doctorProfile.availableDays,
     doctorProfile.availableTimes,
     doctorProfile.advanceDay,
-    doctorProfile.user_id,
+    doctorProfile.user_id
   );
 
-  
+  const batchSize = 50; // Adjust based on your database performance
 
-  for (const appointment of appointments) {
-    const { doctor_user_id, unixTimestamp } = appointment;
+  try {
+    let createdAppointments = [];
+    for (let i = 0; i < appointments.length; i += batchSize) {
+      const batch = appointments.slice(i, i + batchSize);
+      const createdBatch = await Promise.all(batch.map(async (appointment) => {
+        const { doctor_user_id, unixTimestamp } = appointment;
 
-    // Check if an appointment with the same doctor_user_id and unixTimestamp exists
-    const existingAppointment = await Appointment.findOne({
-      doctor_user_id,
-      unixTimestamp,
-    });
+        // Check if an appointment with the same doctor_user_id and unixTimestamp exists
+        const existingAppointment = await Appointment.findOne({
+          doctor_user_id,
+          unixTimestamp,
+        });
 
-    // If the appointment doesn't exist, create it
-    if (!existingAppointment) {
-     const temp= await Appointment.create(appointment);
-     console.log(temp)
-      console.log(`Appointment created: ${doctor_user_id} - ${unixTimestamp}`);
-    } else {
-      console.log(`Appointment already exists: ${doctor_user_id} - ${unixTimestamp}`);
+        // If the appointment doesn't exist, create it
+        if (!existingAppointment) {
+          return Appointment.create(appointment);
+        } else {
+          console.log(`Appointment already exists: ${doctor_user_id} - ${unixTimestamp}`);
+          return null; // Avoid unnecessary creation of existing appointments
+        }
+      }));
+      createdAppointments = createdAppointments.concat(createdBatch.filter(Boolean)); // Filter out null values from existing appointments
     }
+
+    console.log(`Created ${createdAppointments.length} appointments`);
+
+    const currentUnixTimestamp = Math.floor(new Date().getTime() / 1000);
+    const existingAppointments = await Appointment.find({
+      doctor_user_id: user_id,
+      unixTimestamp: { $gt: currentUnixTimestamp },
+    }).populate("patient").populate("swap-request");
+
+    const groupedByDay = groupAppointmentsByDay(existingAppointments);
+
+    res.status(200).json({
+      appointments: groupedByDay,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error creating appointments" });
   }
-
-  const currentUnixTimestamp = Math.floor(new Date().getTime() / 1000);
-  const existingAppointments = await Appointment.find({
-    doctor_user_id:user_id,
-    unixTimestamp: { $gt: currentUnixTimestamp },
-  }).populate("patient").populate("swap-request");;
-
-  const groupedByDay = groupAppointmentsByDay(existingAppointments);
-  console.log(groupedByDay)
-
-
-
-
-  res.status(200).json({
-    appointments:groupedByDay,
-  })
-
 });
-
 
 
 
@@ -235,7 +237,7 @@ const groupAppointmentsByDay = (appointments) => {
   const groupedAppointments = {};
 
   appointments.forEach((appointment) => {
-    const dateKey = appointment.date.toISOString().split('T')[0]; // Extract YYYY-MM-DD
+    const dateKey = appointment.date.toISOString().split('T')[0]; // Convert to string and extract YYYY-MM-DD
 
     if (!groupedAppointments[dateKey]) {
       groupedAppointments[dateKey] = [];
@@ -244,9 +246,13 @@ const groupAppointmentsByDay = (appointments) => {
     groupedAppointments[dateKey].push(appointment);
   });
 
+  // Sort appointments within each group by time
+  Object.keys(groupedAppointments).forEach((dateKey) => {
+    groupedAppointments[dateKey].sort((a, b) => a.time.localeCompare(b.time));
+  });
+
   return groupedAppointments;
 };
-
 
 module.exports = {
   createDoctorProfile,

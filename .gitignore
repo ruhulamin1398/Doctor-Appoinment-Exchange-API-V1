@@ -3,6 +3,7 @@
 # Ignore all files in the node_modules directory
 node_modules/
 
+swaption-e1932-firebase-adminsdk-thay1-19e473700f.json
 
 # Logs
 logs

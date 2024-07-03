@@ -4,6 +4,8 @@ const Appointment = require("../../models/appointmentModel");
 const { response } = require("express");
 const SwapAppontment = require("../../models/swapAppontmentModel");
 const User = require("../../models/userModel");
+const {SendFirebaseNotification}= require("./FirebaseController");
+const userModel = require("../../models/userModel");
 
 
 
@@ -45,7 +47,9 @@ const GetAppointmentDetails = asyncHandler(async (req, res) => {
 // @access  Public 
 const BookAppointment = asyncHandler(async (req, res) => {
   const { appointment_id } = req.body;
-  const patient_user_id = req.user.id;
+  const patient_user_id = req.user.id; 
+const patient =  await userModel.findById(patient_user_id)
+
 
   const appointment = await Appointment.findById(appointment_id);
   if (appointment.patient_user_id) {
@@ -65,6 +69,8 @@ const BookAppointment = asyncHandler(async (req, res) => {
     throw new Error("Some things went worong , Please try again")
   }
 
+
+  
 
   res.status(201).json(
     {
@@ -117,6 +123,9 @@ const SwapAppointment = asyncHandler(async (req, res) => {
 
   const appointment = await Appointment.findById(appointment_id);
 
+ 
+ 
+
   if (!appointment.patient_user_id) {
     res.status(400);
     throw new Error("Appointment Not Booked Yet")
@@ -157,6 +166,50 @@ const SwapAppointment = asyncHandler(async (req, res) => {
     res.status(500);
     throw new Error("Some things went worong , Please try again")
   }
+
+
+
+   ////  sending notification 
+   const patient= await userModel.findById(appointment.patient_user_id)  
+  
+   let notification = {
+    title: 'New Swap Request',
+    body: `Hey ${patient.username}, someone wants your reservation. Do you want to swap it?`
+  };
+  
+  let data= {
+    link: 'https://www.example.com/',  
+    code: '123456'  
+  }
+  
+  
+  
+   const  snotification =  await SendFirebaseNotification(patient.firebase_token, notification,data) ;
+  res.json({notification})
+
+
+
+
+
+//   After swapping requests sent:
+// Hey (first name of appointment owner) anyone want your a reservation.
+// Do you want to swap it?
+
+// After accept swap request accept:congratulations (first name who sent swap request)!!  (First name of appointment owner) accept your swap request.
+// Enjoy your reservation!!
+
+
+
+
+  // let   notification= {
+  //   title: 'hello 5',
+  //   body: ' did you get it '
+  // }
+  
+  //  const  snotification =  await SendFirebaseNotification(patient.firebase_token, notification) ;
+  
+  
+
 
   res.status(200).json({
     "msg": "Request send successfull",
@@ -339,6 +392,31 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
       { status: 2 },
       { new: true }
     );
+
+
+
+   ////  sending notification 
+   const patient= await userModel.findById(user_id) 
+   const RequestedUser= await userModel.findById(SwapAppontment.requested_user_id)  
+  
+   let notification = {
+    title: 'New Swap Request',
+    body: `congratulations ${RequestedUser.username}!!  ${patient.username} accept your swap request. Enjoy your reservation!!`
+  };
+  
+  
+
+  let data= {
+    link: 'https://www.example.com/',  
+    code: '123456'  
+  }
+  
+  
+  
+   const  snotification =  await SendFirebaseNotification(RequestedUser.firebase_token, notification,data) ;
+  res.json({notification})
+
+ 
 
     res.status(200).json(
       {
