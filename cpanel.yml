@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    # - export DEPLOYPATH=/home/masjeebl/public_html
+    - export DEPLOYPATH=/home/ruhul/swaption 
+    - /bin/cp -r * $DEPLOYPATH #copy all from root 
