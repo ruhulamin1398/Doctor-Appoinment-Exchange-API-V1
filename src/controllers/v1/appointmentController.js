@@ -174,17 +174,16 @@ const SwapAppointment = asyncHandler(async (req, res) => {
   
    let notification = {
     title: 'New Swap Request',
-    body: `Hey ${patient.username}, someone wants your reservation. Do you want to swap it?`
+    body: `Hey ${patient.username}, someone wants your reservation. Do you want to swap it?`,
+    
+ click_action:'http://localhost:8081'
   };
   
-  let data= {
-    link: 'https://www.example.com/',  
-    code: '123456'  
-  }
+   
   
   
   
-   const  snotification =  await SendFirebaseNotification(patient.firebase_token, notification,data) ;
+   const  snotification =  await SendFirebaseNotification(patient.firebase_token, notification ) ;
   res.json({notification})
 
 
@@ -395,26 +394,6 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
 
 
 
-   ////  sending notification 
-   const patient= await userModel.findById(user_id) 
-   const RequestedUser= await userModel.findById(SwapAppontment.requested_user_id)  
-  
-   let notification = {
-    title: 'New Swap Request',
-    body: `congratulations ${RequestedUser.username}!!  ${patient.username} accept your swap request. Enjoy your reservation!!`
-  };
-  
-  
-
-  let data= {
-    link: 'https://www.example.com/',  
-    code: '123456'  
-  }
-  
-  
-  
-   const  snotification =  await SendFirebaseNotification(RequestedUser.firebase_token, notification,data) ;
-  res.json({notification})
 
  
 
@@ -457,6 +436,9 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
 // status change 
 
 
+
+
+
 const allSwapAppointment = await SwapAppontment.find({appointment_id})
 for (const srequest of allSwapAppointment) {
   await SwapAppontment.findByIdAndUpdate(
@@ -489,6 +471,29 @@ await Appointment.findByIdAndUpdate(
   { new: true }
 );
 console.log("done")
+
+
+   ////  sending notification 
+  
+// start sencd notification  
+const patient= await userModel.findById(swapRequest.patient_user_id) 
+const RequestedUser= await userModel.findById(swapRequest.requested_user_id)  
+console.log("             -----       sending notification  -------------------------")
+console.log("patient ",patient)
+console.log("RequestedUser", RequestedUser)
+let notification = {
+ title: 'Swap Request Accepted',
+ body: `congratulations ${RequestedUser.username}!!  ${patient.username} accept your swap request. Enjoy your reservation!!`,
+ click_action:'http://localhost:8081'
+};
+
+ 
+
+const  snotification =  await SendFirebaseNotification(RequestedUser.firebase_token, notification
+) ;
+
+// end send notification 
+
 
     res.status(200).json(
       {
