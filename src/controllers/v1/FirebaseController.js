@@ -12,14 +12,15 @@ admin.initializeApp({
 
 
 
-const SendFirebaseNotification = asyncHandler(async (device_id, notification) => {
+const SendFirebaseNotification = asyncHandler(async (device_id, notificationData) => {
      
         const message = {
-          notification: notification,
+          notification: notificationData.notification,
           token: device_id,
     
         };
-        console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        console.log(" token ", message.token)
+        console.log(" notification ", message.notification)
       
         // Send the message to the device
         admin.messaging().send(message)
