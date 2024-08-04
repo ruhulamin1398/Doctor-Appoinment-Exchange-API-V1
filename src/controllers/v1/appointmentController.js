@@ -9,7 +9,7 @@ const userModel = require("../../models/userModel");
 const { sentEMail } = require("./mailSenderController");
 
 const { format } = require('date-fns');
-const { zonedTimeToUtc, utcToZonedTime, format: formatTZ } = require('date-fns-tz');
+const { zonedTimeToUtc, utcToZonedTime, format: formatTZ } = require('  ');
 
 
 
@@ -65,7 +65,7 @@ const BookAppointment = asyncHandler(async (req, res) => {
 
   const doctor = await userModel.findById(appointment.doctor_user_id)
 
-
+ 
 
   // ! this section should uncomment  // start 
 
