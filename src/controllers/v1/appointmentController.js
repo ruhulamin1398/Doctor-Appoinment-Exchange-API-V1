@@ -9,7 +9,7 @@ const userModel = require("../../models/userModel");
 const { sentEMail } = require("./mailSenderController");
 
 const { format } = require('date-fns');
-const { zonedTimeToUtc, utcToZonedTime, format: formatTZ } = require('  ');
+const { zonedTimeToUtc, utcToZonedTime, format: formatTZ } = require('date-fns-tz');
 
 
 
@@ -267,7 +267,6 @@ const SwapAppointment = asyncHandler(async (req, res) => {
     title: 'New Swap Request',
     body: `Hey ${patient.username}, someone wants your reservation. Do you want to swap it?`,
 
-    click_action: 'http://localhost:8081'
   };
 
 
