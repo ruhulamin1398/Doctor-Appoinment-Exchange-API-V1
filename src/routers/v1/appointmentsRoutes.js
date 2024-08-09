@@ -10,7 +10,7 @@ const {
  
 } = require("../../controllers/v1/appointmentController");
 const validateToken = require("../../middleware/v1/validateTokenHandler");
-const checkUserIsActive = require("../../middleware/v1/checkUserController");
+const checkUserIsActive = require("../../middleware/v1/userIsActiveHandler")
 
 const router = express.Router();
 router.use(validateToken);
