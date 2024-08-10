@@ -149,7 +149,7 @@ const BookAppointment = asyncHandler(async (req, res) => {
   try {
     await sentEMail({
         "body": `<p> Hey ${doctor.username}, your appointment successfully booked</p>`,
-        "to": patient.email,
+        "to": doctor.email,
         "subject": "You have new Appointment",
 
     })
@@ -264,17 +264,18 @@ const SwapAppointment = asyncHandler(async (req, res) => {
   const patient = await userModel.findById(appointment.patient_user_id)
 
   let notification = {
+    notification: {
     title: 'New Swap Request',
     body: `Hey ${patient.username}, someone wants your reservation. Do you want to swap it?`,
 
-  };
+  }};
 
 
 
 
 
   const snotification = await SendFirebaseNotification(patient.firebase_token, notification);
-  res.json({ notification })
+  // res.json({ notification })
 
 
 
