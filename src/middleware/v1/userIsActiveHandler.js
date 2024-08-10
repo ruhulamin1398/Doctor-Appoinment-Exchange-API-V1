@@ -2,17 +2,13 @@ const asyncHandler = require("express-async-handler");
 const User = require("../../models/userModel")
 
 const checkUserIsActive = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
-
-
-  if (!email || !password) {
-
-    res.status(400)
-    throw new Error("All field are mendatory")
-  }
+  
+  const email = req.user.email;
 
   const user = await User.findOne({ email });
- 
+ console.log("user---------------------------------------")
+ console.log(user)
+ console.log("user ---------------------------------------------- ennd " )
   if (!user) {
 
     res.status(401);
