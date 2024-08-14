@@ -40,7 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (user) {
         console.log("verify email sending!!!", user.id)
-        const isSentVerifyMail = await sentVerifyMail(user.id)
+        // const isSentVerifyMail = await sentVerifyMail(user.id)
         console.log("verify email send done !!!")
         const data = {
             type: "user"

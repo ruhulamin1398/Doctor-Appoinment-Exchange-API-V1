@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema(
     },
     is_verified: {
       type: Boolean,
-      default: false,
+      default: true,
     },
 
     user_type: {
