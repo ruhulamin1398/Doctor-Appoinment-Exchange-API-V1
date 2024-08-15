@@ -575,7 +575,7 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
     let notification = {
       title: 'Swap Request Accepted',
       body: `congratulations ${RequestedUser.username}!!  ${patient.username} accept your swap request. Enjoy your reservation!!`,
-      click_action: 'http://localhost:8081'
+  
     };
 
 
