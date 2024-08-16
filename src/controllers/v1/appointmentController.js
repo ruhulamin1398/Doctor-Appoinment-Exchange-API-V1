@@ -573,9 +573,11 @@ const ResponseSwapRequest = asyncHandler(async (req, res) => {
     console.log("patient ", patient)
     console.log("RequestedUser", RequestedUser)
     let notification = {
+
+    notification: {
       title: 'Swap Request Accepted',
       body: `congratulations ${RequestedUser.username}!!  ${patient.username} accept your swap request. Enjoy your reservation!!`,
-  
+    }
     };
 
 
